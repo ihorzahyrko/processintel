@@ -161,6 +161,7 @@ class GeneticMinerController(BaseAlgorithmController):
         """
         self.process_algorithm_parameters()
         view.display_back_button()
+        view.display_home_button()
         view.display_export_button(disabled=True)
         if (
             st.session_state.get("rerun_genetic_miner", False)

@@ -1,6 +1,6 @@
 import streamlit as st
 
-from app.components.buttons import home_button, navigation_button
+from app.components.buttons import back_button, home_button, navigation_button
 from app.components.interactiveGraph import interactiveGraph
 from app.components.number_input_slider import number_input_slider
 from app.ui.base_ui.base_view import BaseView
@@ -26,7 +26,9 @@ class BaseAlgorithmView(BaseView):
         button_container = st.container()
         self.node_data_container = st.container()
         with button_container:
-            self.back_button_column, _, export_button_column = st.columns([1, 1, 1])
+            self.back_button_column, self.home_button_column, export_button_column = (
+                st.columns([1, 1, 1])
+            )
 
         with export_button_column:
             self.export_button_container = st.empty()

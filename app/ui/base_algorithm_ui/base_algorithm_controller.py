@@ -231,6 +231,7 @@ class BaseAlgorithmController(BaseController, ABC):
         """
         self.process_algorithm_parameters()
         view.display_back_button()
+        view.display_home_button()
         view.display_export_button(disabled=True)
 
         if self.have_parameters_changed() or self.mining_model.get_graph() is None:
