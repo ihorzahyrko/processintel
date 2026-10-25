@@ -155,9 +155,14 @@ class BaseAlgorithmView(BaseView):
             )
 
     def display_back_button(self) -> None:
-        """Displays the back button. The button navigates back to the home page."""
+        """Displays the back button. The button navigates back to the column selection page."""
         with self.back_button_column:
-            home_button("Back", width="stretch")
+            back_button("Back", width="stretch")
+
+    def display_home_button(self) -> None:
+        """Displays the home button between the back and export buttons. The button navigates to the home page."""
+        with self.home_button_column:
+            home_button("Home", width="stretch")
 
     def display_export_button(self, disabled=False) -> None:
         """Displays the export button. The button is disabled while the graph is loading.

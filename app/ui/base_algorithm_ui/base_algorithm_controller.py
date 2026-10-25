@@ -219,9 +219,6 @@ class BaseAlgorithmController(BaseController, ABC):
             st.session_state.model = self.create_empty_model(*log_data)
             self.mining_model = st.session_state.model
 
-            del st.session_state.df
-            del st.session_state.selected_columns
-
     def run(self, view, pos):
         """Runs the algorithm controller.
 

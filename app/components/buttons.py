@@ -22,6 +22,24 @@ def home_button(label: str = "Home", route: str = "Home", width="content") -> No
     )
 
 
+def back_button(label: str = "Back", width="content") -> None:
+    """Create a button to navigate back to the column selection page, keeping the imported data and selections.
+
+    Parameters
+    ----------
+    label : str, optional
+        button label, by default "Back"
+    width : str, optional
+        set the button width to the container width, by default content
+    """
+    st.button(
+        label,
+        type="secondary",
+        on_click=to_column_selection,
+        width=width,
+    )
+
+
 def to_home(route="Home"):
     """Navigate to the home page. If an error message is present, it is displayed.
 
@@ -37,6 +55,36 @@ def to_home(route="Home"):
     if error_message:
         st.session_state.error = error_message
     st.session_state.page = route
+
+
+def to_column_selection():
+    """Navigate back to the column selection page. The imported dataframe, the selected columns and the selected algorithm
+    are kept, while all algorithm specific state (e.g. the mining model and its parameters) is discarded.
+    If no dataframe is available, the user is navigated to the home page instead.
+    """
+    if "df" not in st.session_state:
+        to_home()
+        return
+
+    from app.config import algorithm_mappings
+
+    df = st.session_state.df
+    selected_columns = st.session_state.get("selected_columns", {})
+    algorithm = st.session_state.get("algorithm")
+    session_tmp_dir = st.session_state.get("session_tmp_dir")
+
+    st.session_state.clear()
+
+    st.session_state.df = df
+    if session_tmp_dir is not None:
+        st.session_state.session_tmp_dir = session_tmp_dir
+    for column, value in selected_columns.items():
+        st.session_state[column] = value
+    for algorithm_name, algorithm_route in algorithm_mappings.items():
+        if algorithm_route == algorithm:
+            st.session_state.algorithm_selection = algorithm_name
+            break
+    st.session_state.page = "ColumnSelection"
 
 
 def navigation_button(
